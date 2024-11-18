@@ -31,7 +31,7 @@ int main(void)
 	setlocale(LC_ALL, "ru-RU");
 	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
-	char message[100];
+	char message[100];// Некоторые костыли
 	int result = sprintf(message, "Как Вы хотите заполнить массив?\n %d - ручной ввод, %d - случайный ввод",
 		manual, random);
 	const int choice = input(message);
@@ -45,11 +45,11 @@ int main(void)
 	case random:
 	{
 		int min = input("Введите минимальное значение массива");
-		int max = input("Введите максимльное значение массива");
+		int max = input("Введите максимальное значение массива");
 		if (min > max)
 		{
 			errno = ERANGE;
-			perror("Непрпавильный диапазон");
+			perror("Неправильный диапазон");
 			exit(1);
 		}
 		random_fill(array, size, min, max);
@@ -64,9 +64,18 @@ int main(void)
 	}
 	puts("Массив:");
 	print_array(array, size);
-	puts("\n");
-	printf_s("Максимальный элемент массива %d", get_max(array, size));
+
+	printf_s("\nМаксимальный элемент массива %d\n", get_max(array, size));
+
+	int* copy_array = copy(array, size);
+	puts("Копи Массив:");
+	copy_array[0] = 100;
+	print_array(copy_array, size);
+	puts("\nМассив:");
+	print_array(array, size);
+
 	free(array);
+	free(copy_array);
 	return 0;
 }
 
@@ -158,7 +167,7 @@ int* copy(const int* const array, const size_t size)
 {
 	check_array(array);
 	int* copy_array = get_array(size);
-	check_array(copy_array);
+
 	for (size_t i = 1; i < size - 1; ++i)
 	{
 		copy_array[i] = array[i];
