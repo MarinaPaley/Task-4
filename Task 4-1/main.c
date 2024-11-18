@@ -1,6 +1,6 @@
 ﻿#include <stdio.h>
 #include <memory.h>
-#include<errno.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <time.h>
 #include <stdlib.h>
@@ -28,11 +28,11 @@ int* copy(const int* const array, const size_t size);
 */
 int main(void)
 {
-	setlocale(LC_ALL, "ru-RUS");
+	setlocale(LC_ALL, "ru-RU");
 	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
 	char message[100];
-	int result = sprintf(message, "Как Вы хотите заполнить массив?\n, %d - ручной ввод, %d - случайный ввод",
+	int result = sprintf(message, "Как Вы хотите заполнить массив?\n %d - ручной ввод, %d - случайный ввод",
 		manual, random);
 	const int choice = input(message);
 	switch ((enum fill)choice)
@@ -64,7 +64,8 @@ int main(void)
 	}
 	puts("Массив:");
 	print_array(array, size);
-	printf_s("Максимальный элемент массива %zu", size);
+	puts("\n");
+	printf_s("Максимальный элемент массива %d", get_max(array, size));
 	free(array);
 	return 0;
 }
@@ -116,7 +117,7 @@ void print_array(const int* const array, const size_t size)
 	{
 		printf_s("%d, ", array[i]);
 	}
-	printf_s("%d%s", array[size - 1]," }");
+	printf_s("%d%s", array[i]," }");
 }
 
 void manual_fill(int* const array, const size_t size)
