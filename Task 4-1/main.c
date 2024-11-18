@@ -31,9 +31,17 @@ int main(void)
 	setlocale(LC_ALL, "ru-RU");
 	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
-	char message[100];// Некоторые костыли
+
+	char message[100];
 	int result = sprintf(message, "Как Вы хотите заполнить массив?\n %d - ручной ввод, %d - случайный ввод",
 		manual, random);
+	if (result == -1)
+	{
+		errno = ENOMEM;
+		perror("Возникла проблема с формированием строки");
+		exit(1);
+	}
+
 	const int choice = input(message);
 	switch ((enum fill)choice)
 	{
@@ -131,11 +139,10 @@ void print_array(const int* const array, const size_t size)
 
 void manual_fill(int* const array, const size_t size)
 {
-	char message[100];
 	for (size_t i = 0; i < size - 1; ++i)
 	{
-		int result = sprintf(message, "Введите %zu - й элемент", i + 1);
-		array[i] = input(message);
+		printf_s("Введите %zu - й элемент", i + 1);
+		array[i] = input(NULL);
 	}
 }
 
