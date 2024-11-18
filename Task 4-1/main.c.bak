@@ -1,10 +1,10 @@
-п»ї#include <stdio.h>
+#include <stdio.h>
 #include <memory.h>
 #include<errno.h>
 #include <stdbool.h>
 #include <time.h>
 #include <stdlib.h>
-#include <locale.h>
+#include <clocale>
 
 enum fill
 {
@@ -23,16 +23,16 @@ int get_max(const int* const array, const size_t size);
 int* copy(const int* const array, const size_t size);
 
 /**
-* @brief РўРѕС‡РєР° РІС…РѕРґР° РІ РїСЂРѕРіСЂР°РјРјСѓ.
-* @return \0 РІ СЃР»СѓС‡Р°Рµ РїСЂР°РІРёР»СЊРЅРѕРіРѕ РІС‹РїРѕР»РЅРµРЅРёСЏ.
+* @brief Точка входа в программу.
+* @return \0 в случае правильного выполнения.
 */
 int main(void)
 {
 	setlocale(LC_ALL, "ru-RUS");
-	const size_t size = input_size("Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°");
+	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
 	char message[100];
-	int result = sprintf(message, "РљР°Рє Р’С‹ С…РѕС‚РёС‚Рµ Р·Р°РїРѕР»РЅРёС‚СЊ РјР°СЃСЃРёРІ?\n, %d - СЂСѓС‡РЅРѕР№ РІРІРѕРґ, %d - СЃР»СѓС‡Р°Р№РЅС‹Р№ РІРІРѕРґ",
+	int result = sprintf(message, "Как Вы хотите заполнить массив?\n, %d - ручной ввод, %d - случайный ввод",
 		manual, random);
 	const int choice = input(message);
 	switch ((enum fill)choice)
@@ -44,12 +44,12 @@ int main(void)
 	}
 	case random:
 	{
-		int min = input("Р’РІРµРґРёС‚Рµ РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РјР°СЃСЃРёРІР°");
-		int max = input("Р’РІРµРґРёС‚Рµ РјР°РєСЃРёРјР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РјР°СЃСЃРёРІР°");
+		int min = input("Введите минимальное значение массива");
+		int max = input("Введите максимльное значение массива");
 		if (min > max)
 		{
 			errno = ERANGE;
-			perror("РќРµРїСЂРїР°РІРёР»СЊРЅС‹Р№ РґРёР°РїР°Р·РѕРЅ");
+			perror("Непрпавильный диапазон");
 			exit(1);
 		}
 		random_fill(array, size, min, max);
@@ -58,13 +58,13 @@ int main(void)
 	default:
 	{
 		errno = ERANGE;
-		perror("РќРµС‚ С‚Р°РєРѕРіРѕ РІС‹Р±РѕСЂР°");
+		perror("Нет такого выбора");
 		return 1;
 	}
 	}
-	puts("РњР°СЃСЃРёРІ:");
+	puts("Массив:");
 	print_array(array, size);
-	printf_s("РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° %zu", size);
+	printf_s("Максимальный элемент массива %zu", size);
 	free(array);
 	return 0;
 }
@@ -80,7 +80,7 @@ int input(const char* message)
 	if (result != 1)
 	{
 		errno = EINVAL;
-		perror("РќРµРїСЂР°РІРёР»СЊРЅРѕРµ С‡РёСЃР»Рѕ");
+		perror("Неправильное число");
 		exit(1);
 	}
 
@@ -93,7 +93,7 @@ size_t input_size(const char* message)
 	if (size <= 0)
 	{
 		errno = EDOM;
-		perror("СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЃС‚СЂРѕРіРѕ Р±РѕР»СЊС€Рµ РЅСѓР»СЏ");
+		perror("размер массива должен быть строго больше нуля");
 		exit(1);
 	}
 
@@ -124,7 +124,7 @@ void manual_fill(int* const array, const size_t size)
 	char message[100];
 	for (size_t i = 0; i < size - 1; ++i)
 	{
-		int result = sprintf(message, "Р’РІРµРґРёС‚Рµ %zu - Р№ СЌР»РµРјРµРЅС‚", i + 1);
+		int result = sprintf(message, "Введите %zu - й элемент", i + 1);
 		array[i] = input(message);
 	}
 }
@@ -171,7 +171,7 @@ void check_array(const int* const array)
 	if (NULL == array)
 	{
 		errno = ENOMEM;
-		perror("РќРµ РІС‹РґРµР»РµРЅР° РїР°РјСЏС‚СЊ");
+		perror("Не выделена память");
 		exit(1);
 	}
 }
