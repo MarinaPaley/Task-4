@@ -1,15 +1,17 @@
-﻿#include <stdio.h>
-#include <memory.h>
-#include <errno.h>
-#include <stdbool.h>
-#include <time.h>
-#include <stdlib.h>
-#include <locale.h>
-#include "function.h"
-
-// @NOTE: Стоит обратить внимание на флаги сборки/запуска для предзаданных констант -lD
+﻿// @NOTE: Стоит обратить внимание на флаги сборки/запуска для предзаданных констант -lD
 // @see: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
 #define USE_LOCALE 0
+
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#if USE_LOCALE == 1
+#include <locale.h>
+#endif // USE_LOCALE
+
+#include "function.h"
+
 
 /**
 * @brief Точка входа в программу.

@@ -1,10 +1,8 @@
-#include <stdio.h>
-#include <memory.h>
 #include <errno.h>
-#include <stdbool.h>
-#include <time.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
+#include <time.h>
+
 #include "function.h"
 
 int input(const char* message)
