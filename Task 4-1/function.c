@@ -30,7 +30,7 @@ size_t input_size(const char* message)
 	if (size <= 0)
 	{
 		errno = EDOM;
-		perror("размер массива должен быть строго больше нуля");
+		perror("Размер массива должен быть строго больше нуля");
 		exit(1);
 	}
 
@@ -88,6 +88,7 @@ void random_fill(int* const array, const size_t size, const int min, const int m
 int get_max(const int* const array, const size_t size)
 {
 	check_array(array);
+
 	int max = array[0];
 	for (size_t i = 1; i < size; ++i)
 	{
@@ -105,7 +106,6 @@ int* copy(const int* const array, const size_t size)
 	check_array(array);
 
 	int* copy_array = get_array(size);
-
 	for (size_t i = 0; i < size; ++i)
 	{
 		copy_array[i] = array[i];
