@@ -89,7 +89,7 @@ int get_max(const int* const array, const size_t size)
 {
 	check_array(array);
 	int max = array[0];
-	for (size_t i = 1; i < size - 1; ++i)
+	for (size_t i = 1; i < size; ++i)
 	{
 		if (max < array[i])
 		{
