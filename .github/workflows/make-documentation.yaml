@@ -20,7 +20,7 @@ jobs:
         with:
             # пока уберём красоту, не взлетает из-за пакета шрифта, хотя он есть
             # see: https://pkgs.alpinelinux.org/packages?name=font-fira-code
-            additional-packages: font-fira-code
+            additional-packages: font-fira-code-nerd
             doxyfile-path: './Doxyfile'
             enable-latex: true
 
