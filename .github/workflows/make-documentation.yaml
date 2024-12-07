@@ -1,0 +1,30 @@
+﻿name: Создание документации по комментариям из кода
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  make-docs:
+    name: Производство документации
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Prepare Doxygen
+        uses: mattnotmitt/doxygen-action@v1.9.8
+        with:
+            # пока уберём красоту, не взлетает из-за пакета шрифта, хотя он есть
+            # see: https://pkgs.alpinelinux.org/packages?name=font-fira-code
+            additional-packages: font-fira-code-nerd
+            doxyfile-path: './Doxyfile'
+            enable-latex: true
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+            path: './docs'
