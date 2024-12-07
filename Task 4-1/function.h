@@ -31,6 +31,14 @@ int input(const char* message);
 size_t input_size(const char* message);
 
 /**
+* @brief Ввод выбора пользователя относительно способа заполнения массива.
+* @param[in] message Сообщение.
+* @remarks Экстренно завершает работу программу в случае неправильного ввода.
+* @returns Возвращает выбор пользователя относительно способа заполнения массива.
+*/
+enum fill input_choice(const char* message);
+
+/**
 * @brief Выделяет память под массив.
 * @param[in] size Размер массива.
 * @remarks Экстренно завершает работу программу в случае невозможности выделения памяти.
@@ -101,3 +109,11 @@ void bubble_sort(int* const array, const size_t size);
 * @param[in] rha Правый аргумент.
 */
 void swap(int* lha, int* rha);
+
+/**
+* @brief Строит сообщение в виде \c C строки по формату \p fmt и набору дополнительных аргументов.
+* @param[in] fmt Форматная строка.
+* @remarks ОСТОРОЖНО! ВНУТРИ ЧЁРНАЯ МАГИЯ И СТРАШНОЕ КОЛДУНСТВО!
+* @returns Сформированное сообщение в виде \c C строки.
+*/
+char* make_message(const char* fmt, ...);

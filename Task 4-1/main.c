@@ -1,5 +1,8 @@
-﻿// @NOTE: Стоит обратить внимание на флаги сборки/запуска для предзаданных констант -lD
-// @see: https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
+﻿/**
+* @brief Флаг, указывающий на необходимость дополнительной настройки локали пользователя.
+* @remarks Стоит обратить внимание на флаги сборки/запуска для предзаданных констант @c -D
+* @see https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html
+*/
 #define USE_LOCALE 0
 
 #include <errno.h>
@@ -14,11 +17,10 @@
 
 /**
 * @brief Точка входа в программу.
-* @return @c 0 в случае правильного выполнения.
+* @return Код ошибки. @c 0 в случае правильного выполнения.
 */
 int main(void)
 {
-	// @see: https://learn.microsoft.com/en-us/cpp/preprocessor/hash-if-hash-elif-hash-else-and-hash-endif-directives-c-cpp?view=msvc-170
 	#if USE_LOCALE == 1
 		setlocale(LC_ALL, "ru-RU");
 	#endif // USE_LOCALE
@@ -26,13 +28,13 @@ int main(void)
 	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
 
-	printf_s(
-		"Как Вы хотите заполнить массив ? \n% d - ручной ввод, % d - случайный ввод\n",
+	const char* message = make_message(
+		"Как Вы хотите заполнить массив?\n%d - ручной ввод, %d - случайный ввод\n",
 		manual,
 		random);
 
-	const int choice = input(NULL);
-	switch ((enum fill)choice)
+	const enum fill choice = input_choice(message);
+	switch (choice)
 	{
 		case manual:
 		{
@@ -41,14 +43,15 @@ int main(void)
 		}
 		case random:
 		{
-			int min = input("Введите минимальное значение массива");
-			int max = input("Введите максимальное значение массива");
+			const int min = input("Введите минимальное значение массива");
+			const int max = input("Введите максимальное значение массива");
 			if (min > max)
 			{
 				errno = ERANGE;
 				perror("Неправильный диапазон");
 				exit(1);
 			}
+
 			random_fill(array, size, min, max);
 			break;
 		}
@@ -75,5 +78,6 @@ int main(void)
 
 	free(array);
 	free(copy_array);
+
 	return 0;
 }

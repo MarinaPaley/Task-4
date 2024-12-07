@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -37,6 +38,12 @@ size_t input_size(const char* message)
 	return (size_t)size;
 }
 
+enum fill input_choice(const char* message)
+{
+	const int choice = input(message);
+	return ((enum fill)choice);
+}
+
 int* get_array(const size_t size)
 {
 	int* array = (int*)malloc(size * sizeof(int));
@@ -56,7 +63,7 @@ void print_array(
 		printf_s("%s: ", message);
 	}
 
-	puts("{ ");
+	printf_s("{ ");
 
 	size_t i = 0;
 	for (; i < size - 1; ++i)
@@ -64,7 +71,7 @@ void print_array(
 		printf_s("%d, ", array[i]);
 	}
 
-	printf_s("%d%s", array[i], " }");
+	printf_s("%d }", array[i]);
 }
 
 void manual_fill(int* const array, const size_t size)
@@ -135,6 +142,20 @@ void swap(int* lha, int* rha)
 	int temp = *lha;
 	*lha = *rha;
 	*rha = temp;
+}
+
+char* make_message(const char* fmt, ...)
+{
+	va_list args1;
+	va_start(args1, fmt);
+	va_list args2;
+	va_copy(args2, args1);
+	const int need_size = 1 + snprintf(NULL, 0, fmt, args1);
+	char* buffer = (char*)malloc(need_size);
+	va_end(args1);
+	vsnprintf(buffer, need_size, fmt, args2);
+	va_end(args2);
+	return buffer;
 }
 
 void check_array(const int* const array)
