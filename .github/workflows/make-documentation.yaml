@@ -21,7 +21,7 @@ jobs:
             # пока уберём красоту, не взлетает из-за пакета шрифта, хотя он есть
             # see: https://pkgs.alpinelinux.org/packages?name=font-fira-code
             additional-packages: font-fira-code
-            working-directory: './Task 4-1'
+            working-directory: '\"./Task 4-1\"'
             doxyfile-path: './Task 4-1/Doxyfile'
             enable-latex: true
 
