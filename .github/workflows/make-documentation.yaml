@@ -9,7 +9,7 @@ on:
 jobs:
   make-docs:
     name: Производство документации
-    runs-on: alpina-latest
+    runs-on: alpine-latest
 
     steps:
       - name: Checkout source code
