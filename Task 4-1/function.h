@@ -148,3 +148,6 @@ size_t binary_search_inner(
 	const int target,
 	const size_t start,
 	const size_t finish);
+
+unsigned long long factorial_inner(int number, unsigned long long tail);
+unsigned long long factorial(int number);

@@ -215,7 +215,7 @@ unsigned long long factorial_inner(int number, unsigned long long tail)
 {
 	if (number < 2)
 	{
-		return 1ULL;
+		return tail;
 	}
 
 	return factorial_inner(number - 1, tail * number);

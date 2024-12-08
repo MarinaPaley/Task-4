@@ -94,5 +94,8 @@ int main(void)
 	free(array);
 	free(copy_array);
 
+	int number = 6;
+	printf_s("\n%d! = %llu", number, factorial(number));
+
 	return 0;
 }
