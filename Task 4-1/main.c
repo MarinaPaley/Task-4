@@ -28,12 +28,16 @@ int main(void)
 	const size_t size = input_size("Введите размер массива");
 	int* array = get_array(size);
 
-	const char* message = make_message(
-		"Как Вы хотите заполнить массив?\n%d - ручной ввод, %d - случайный ввод\n",
+	//const char* message = make_message(
+	//	"Как Вы хотите заполнить массив?\n%d - ручной ввод, %d - случайный ввод\n",
+	//	manual,
+	//	random);
+
+	printf_s("Как Вы хотите заполнить массив?\n%d - ручной ввод, %d - случайный ввод\n",
 		manual,
 		random);
 
-	const enum fill choice = input_choice(message);
+	const enum fill choice = input_choice(NULL);
 	switch (choice)
 	{
 		case manual:
@@ -75,6 +79,17 @@ int main(void)
 
 	bubble_sort(array, size);
 	print_array(array, size, "\nОтсортированный Массив");
+
+	int target = input("\nВведите элемен для поиска = ");
+	size_t searched = binary_search(array, size, target);
+	if (searched < size)
+	{
+		printf_s("\nЭлемент %d находится на позиции %zu", target, searched + 1);
+	}
+	else
+	{
+		printf_s("\nИскомый элемент %d не найден", target);
+	}
 
 	free(array);
 	free(copy_array);

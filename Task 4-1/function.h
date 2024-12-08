@@ -99,7 +99,7 @@ int* copy(const int* const array, const size_t size);
 * @brief Сортировка пузырьком.
 * @param[in] array Указатель на массив.
 * @param[in] size Размер массива.
-* @remarks Экстренно завершает работу программу в случае указателя \c NULL.
+* @remarks Экстренно завершает работу программу в случае указателя @c NULL.
 */
 void bubble_sort(int* const array, const size_t size);
 
@@ -111,9 +111,40 @@ void bubble_sort(int* const array, const size_t size);
 void swap(int* lha, int* rha);
 
 /**
-* @brief Строит сообщение в виде \c C строки по формату \p fmt и набору дополнительных аргументов.
+* @brief Строит сообщение в виде @c C строки по формату @p fmt и набору дополнительных аргументов.
 * @param[in] fmt Форматная строка.
 * @remarks ОСТОРОЖНО! ВНУТРИ ЧЁРНАЯ МАГИЯ И СТРАШНОЕ КОЛДУНСТВО!
-* @returns Сформированное сообщение в виде \c C строки.
+* @returns Сформированное сообщение в виде @c C строки.
 */
 char* make_message(const char* fmt, ...);
+
+/**
+* @brief Бинарный поиск
+* @param[in] array Указатель на массив.
+* @param[in] size Размер массива.
+* @param[in] target Искомый элемент.
+* @remarks Экстренно завершает работу программу в случае указателя @c NULL.
+* @returns Индекс найденного эдемента.
+* @remarks Если элемент не найден, возвращает индекс, больший размера массива.
+*/
+size_t binary_search(
+	const int* const array,
+	const size_t size,
+	const int target);
+
+/**
+* @brief Бинарный поиск. Рекурсивная функция.
+* @param[in] array Указатель на массив.
+* @param[in] size Размер массива.
+* @param[in] target Искомый элемент.
+* @param[in] start Начальный индекс поиска.
+* @param[in] finish Конечный индекс поиска.
+* @returns Индекс найденного эдемента.
+* @remarks Если элемент не найден, возвращает индекс, больший размера массива.
+*/
+size_t binary_search_inner(
+	const int* const array,
+	const size_t size,
+	const int target,
+	const size_t start,
+	const size_t finish);

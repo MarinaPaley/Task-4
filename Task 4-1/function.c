@@ -129,7 +129,7 @@ void bubble_sort(int* const array, const size_t size)
 	{
 		for (size_t j = i + 1; j < size; ++j)
 		{
-			if (array[i] < array[j])
+			if (array[i] > array[j])
 			{
 				swap(&array[i], &array[j]);
 			}
@@ -158,6 +158,44 @@ char* make_message(const char* fmt, ...)
 	return buffer;
 }
 
+size_t binary_search(
+	const int* const array,
+	const size_t size,
+	const int target)
+{
+	check_array(array);
+	size_t start = 0;
+	size_t finish = size;
+	return binary_search_inner(array, size, target, start, finish);
+}
+
+size_t binary_search_inner(
+	const int* const array,
+	const size_t size,
+	const int target,
+	const size_t start,
+	const size_t finish)
+{
+	if (start >= finish)
+	{
+		return size;
+	}
+
+	size_t index = (start + finish) / 2;
+
+	if (target < array[index])
+	{
+		return binary_search_inner(array, size, target, start, index - 1);
+	}
+
+	if (target > array[index])
+	{
+		return binary_search_inner(array, size, target, index + 1, finish);
+	}
+
+	return index;
+}
+
 void check_array(const int* const array)
 {
 	if (NULL == array)
@@ -166,4 +204,19 @@ void check_array(const int* const array)
 		perror("Не выделена память");
 		exit(1);
 	}
+}
+
+unsigned long long factorial(int number)
+{
+	return factorial_inner(number, 1ULL);
+}
+
+unsigned long long factorial_inner(int number, unsigned long long tail)
+{
+	if (number < 2)
+	{
+		return 1ULL;
+	}
+
+	return factorial_inner(number - 1, tail * number);
 }
